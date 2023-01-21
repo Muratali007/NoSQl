@@ -4,50 +4,29 @@ import (
 	"MongoDb/pkg/logging"
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 	"html/template"
-	"log"
 	"net/http"
 	"time"
 )
 
-var client *mongo.Client
-var users *mongo.Collection
-
 var gmail string
 
 type User struct {
+	Name     string
 	Email    string
 	Password string
-}
-
-func init() {
-	var err error
-	logger := logging.GetLogger()
-	client, err = mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
-	if err != nil {
-		log.Fatal(err)
-	}
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	err = client.Connect(ctx)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	users = client.Database("test").Collection("users")
-	logger.Info("Connected to a database")
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	logger := logging.GetLogger()
 	if r.Method == http.MethodPost {
 
+		name := r.FormValue("name")
 		email := r.FormValue("email")
 		password := r.FormValue("password")
 
-		if email == "" || password == "" {
+		if email == "" || password == "" || name == "" {
 			http.Error(w, "Email and password are required", http.StatusBadRequest)
 			return
 		}
@@ -71,7 +50,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		}
 
 		ctx, _ = context.WithTimeout(context.Background(), 5*time.Second)
-		_, err = users.InsertOne(ctx, bson.M{"email": email, "password": hashedPassword})
+		_, err = users.InsertOne(ctx, bson.M{"email": email, "name": name, "password": hashedPassword})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -89,8 +68,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	logger := logging.GetLogger()
 	if r.Method == http.MethodPost {
 
+		name := r.FormValue("name")
+		gmail = name
 		email := r.FormValue("email")
-		gmail = email
 		password := r.FormValue("password")
 
 		if email == "" || password == "" {
@@ -102,13 +82,19 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 		err := users.FindOne(ctx, bson.M{"email": email}).Decode(&result)
 		if err != nil {
-			http.Error(w, "Invalid email or password", http.StatusUnauthorized)
+			http.Error(w, "Invalid email", http.StatusUnauthorized)
+			return
+		}
+
+		err = users.FindOne(ctx, bson.M{"name": name}).Decode(&result)
+		if err != nil {
+			http.Error(w, "Invalid name", http.StatusUnauthorized)
 			return
 		}
 
 		err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(password))
 		if err != nil {
-			http.Error(w, "Invalid email or password", http.StatusUnauthorized)
+			http.Error(w, "Invalid password", http.StatusUnauthorized)
 			return
 		}
 
@@ -140,11 +126,11 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	gmail = ""
 }
 func getUser(w http.ResponseWriter) User {
-	email := gmail
+	name := gmail
 	var result User
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 
-	err := users.FindOne(ctx, bson.M{"email": email}).Decode(&result)
+	err := users.FindOne(ctx, bson.M{"name": name}).Decode(&result)
 	if err != nil {
 		http.Error(w, "Error retrieving data from MongoDB", http.StatusInternalServerError)
 		return result
@@ -180,8 +166,4 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		next.ServeHTTP(w, r)
 	}
-}
-
-func Shop(w http.ResponseWriter, r *http.Request) {
-
 }

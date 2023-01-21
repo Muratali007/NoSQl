@@ -1,11 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Shop</title>
+    <title>Product Selector</title>
+    <style>
+        /* CSS for styling the page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .category {
+            width: 25%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .category h2 {
+            margin: 0;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 1px solid black;
+        }
+        .category ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .category li {
+            padding: 10px 0;
+            border-bottom: 1px solid gray;
+        }
+        .category li:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <div class="category">
+        <h2>Category 1</h2>
+        <ul>
+            <li>Product 1</li>
+            <li>Product 2</li>
+            <li>Product 3</li>
+        </ul>
+    </div>
+    <div class="category">
+        <h2>Category 2</h2>
+        <ul>
+            <li>Product 4</li>
+            <li>Product 5</li>
+            <li>Product 6</li>
+        </ul>
+    </div>
+    <div class="category">
+        <h2>Category 3</h2>
+        <ul>
+            <li>Product 7</li>
+            <li>Product 8</li>
+            <li>Product 9</li>
+        </ul>
+    </div>
+    <div class="category">
+        <h2>Category 4</h2>
+        <ul>
+            <li>Product 10</li>
+            <li>Product 11</li>
+            <li>Product 12</li>
+        </ul>
+    </div>
+</div>
 
-
+<form method="post" action="/logout">
+    <input type="submit" value="Logout">
+</form>
 </body>
 </html>

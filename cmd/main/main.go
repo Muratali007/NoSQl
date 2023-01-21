@@ -8,6 +8,7 @@ import (
 
 func main() {
 	logger := logging.GetLogger()
+	Handlers.Init("test", "users")
 	logger.Info("Create route")
 	http.HandleFunc("/register", Handlers.Register)
 	http.HandleFunc("/login", Handlers.Login)
