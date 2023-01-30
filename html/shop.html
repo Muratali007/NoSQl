@@ -1,83 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Selector</title>
+    <title>Object Chooser</title>
     <style>
-        /* CSS for styling the page */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .category {
-            width: 25%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .category h2 {
-            margin: 0;
-            padding: 10px 0;
+        h1 {
             text-align: center;
-            border-bottom: 1px solid black;
         }
-        .category ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .category li {
-            padding: 10px 0;
-            border-bottom: 1px solid gray;
-        }
-        .category li:last-child {
-            border-bottom: none;
+        input[type="radio"] {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="category">
-        <h2>Category 1</h2>
-        <ul>
-            <li>Product 1</li>
-            <li>Product 2</li>
-            <li>Product 3</li>
-        </ul>
-    </div>
-    <div class="category">
-        <h2>Category 2</h2>
-        <ul>
-            <li>Product 4</li>
-            <li>Product 5</li>
-            <li>Product 6</li>
-        </ul>
-    </div>
-    <div class="category">
-        <h2>Category 3</h2>
-        <ul>
-            <li>Product 7</li>
-            <li>Product 8</li>
-            <li>Product 9</li>
-        </ul>
-    </div>
-    <div class="category">
-        <h2>Category 4</h2>
-        <ul>
-            <li>Product 10</li>
-            <li>Product 11</li>
-            <li>Product 12</li>
-        </ul>
-    </div>
-</div>
-
-<form method="post" action="/logout">
-    <input type="submit" value="Logout">
+<h1>Choose an Object</h1>
+<form action="/list" method="post">
+    <button name="element"  id="cpu" value="cpu" type="submit" >Cpu</button>
+</form>
+    <form action="/list2" method="post">
+    <button name="element" id="cooling" value="cooling" type="submit">Colling</button>>
+</form>
+<form action="/list3" method="post">
+    <button name="element"  id="hdd" value="hdd" type="submit" >Hdd</button>
+</form>
+<form action="/list4" method="post">
+    <button name="element"  id="housing" value="housing" type="submit" >Housing</button>
+</form>
+<form action="/list5" method="post">
+    <button name="element"  id="ram" value="ram" type="submit" >Ram</button>
+</form>
+<form action="/list6" method="post">
+    <button name="element"  id="motherboard" value="motherboard" type="submit" >MotherBoard</button>
 </form>
 </body>
 </html>

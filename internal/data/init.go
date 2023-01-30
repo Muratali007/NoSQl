@@ -1,4 +1,4 @@
-package Handlers
+package data
 
 import (
 	"MongoDb/pkg/logging"
@@ -10,7 +10,7 @@ import (
 )
 
 var client *mongo.Client
-var users *mongo.Collection
+var Collection *mongo.Collection
 
 func Init(dbName, collectionName string) {
 	var err error
@@ -25,6 +25,7 @@ func Init(dbName, collectionName string) {
 		log.Fatal(err)
 	}
 
-	users = client.Database(dbName).Collection(collectionName)
+	Collection = client.Database(dbName).Collection(collectionName)
 	logger.Infof("Connected to a database: <%s>, collection: <%s>", dbName, collectionName)
+
 }

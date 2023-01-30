@@ -1,6 +1,7 @@
 package Handlers
 
 import (
+	"MongoDb/internal/data"
 	"MongoDb/pkg/logging"
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
@@ -9,14 +10,6 @@ import (
 	"net/http"
 	"time"
 )
-
-var gmail string
-
-type User struct {
-	Name     string
-	Email    string
-	Password string
-}
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	logger := logging.GetLogger()
@@ -33,7 +26,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 		var count int64
 		ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-		count, err := users.CountDocuments(ctx, bson.M{"email": email})
+		count, err := data.Collection.CountDocuments(ctx, bson.M{"email": email})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -50,7 +43,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		}
 
 		ctx, _ = context.WithTimeout(context.Background(), 5*time.Second)
-		_, err = users.InsertOne(ctx, bson.M{"email": email, "name": name, "password": hashedPassword})
+		_, err = data.Collection.InsertOne(ctx, bson.M{"email": email, "name": name, "password": hashedPassword})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -69,7 +62,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 
 		name := r.FormValue("name")
-		gmail = name
+		data.Gmail = name
 		email := r.FormValue("email")
 		password := r.FormValue("password")
 
@@ -78,15 +71,15 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		var result User
+		var result data.User
 		ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-		err := users.FindOne(ctx, bson.M{"email": email}).Decode(&result)
+		err := data.Collection.FindOne(ctx, bson.M{"email": email}).Decode(&result)
 		if err != nil {
 			http.Error(w, "Invalid email", http.StatusUnauthorized)
 			return
 		}
 
-		err = users.FindOne(ctx, bson.M{"name": name}).Decode(&result)
+		err = data.Collection.FindOne(ctx, bson.M{"name": name}).Decode(&result)
 		if err != nil {
 			http.Error(w, "Invalid name", http.StatusUnauthorized)
 			return
@@ -122,25 +115,13 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	})
 
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
-	logger.Infof("%s do log out", gmail)
-	gmail = ""
-}
-func getUser(w http.ResponseWriter) User {
-	name := gmail
-	var result User
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-
-	err := users.FindOne(ctx, bson.M{"name": name}).Decode(&result)
-	if err != nil {
-		http.Error(w, "Error retrieving data from MongoDB", http.StatusInternalServerError)
-		return result
-	}
-	return result
+	logger.Infof("%s do log out", data.Gmail)
+	data.Gmail = ""
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("html/home.html"))
-	tmpl.Execute(w, getUser(w))
+	tmpl.Execute(w, data.GetUser(w))
 }
 
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
@@ -154,7 +135,7 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 		var count int64
-		count, err = users.CountDocuments(ctx, bson.M{"email": cookie.Value})
+		count, err = data.Collection.CountDocuments(ctx, bson.M{"email": cookie.Value})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

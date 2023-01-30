@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of products</title>
+</head>
+<body>
+<tbody>
+{{ range . }}
+  <tr>
+    <td>{{ .ID }}</td>
+    <td>{{ .Manufacturer }}</td>
+    <td>{{ .Model  }}</td>
+    <td>{{ .Socket   }}</td>
+    <td>{{ .Chipset    }}</td>
+    <td>{{ .FormFactor    }}</td>
+    <td>{{ .RamSlots    }}</td>
+    <td>{{ .RamTypes    }}</td>
+    <td>{{ .MaxRamFrequency  }}</td>
+    <td>{{ .MaxRam }}</td>
+    <td>{{ .Interfaces.Sata3 }}</td>
+    <td>{{ .Interfaces.M2 }}</td>
+    <td>{{ .Interfaces.PciE1x }}</td>
+    <td>{{ .Interfaces.PciE16x }}</td>
+    <td>{{ .PciStandard }}</td>
+    <td>{{ .MbPower }}</td>
+    <td>{{ .CpuPower }}</td>
+  </tr>
+{{ end }}
+</tbody>
+</body>
+</html>
