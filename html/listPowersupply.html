@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of products</title>
+    <style>
+        img {
+            width: 20%;
+            height: auto;
+        }
+         body {
+             height: 100vh;
+             width: 100%;
+             background: rgb(199,195,184);
+             background: linear-gradient(180deg, rgba(199,195,184,1) 22%, rgba(68,143,182,1) 94%);
+         }
+    </style>
+</head>
+<body>
+<tbody>
+{{ range . }}
+    <tr>
+        <td>{{ .Manufacturer }}</td>
+        <td>{{ .Model  }}</td>
+        <td>{{ .FormFactor   }}</td>
+        <form method="post" action="/fullListPowerSupply" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.Image }}">Full</button>
+            <img src="/imagePowersupplies" alt="Image from MongoDB">
+        </form>
+        <br></br>
+    </tr>
+{{ end }}
+</tbody>
+</body>
+</html>

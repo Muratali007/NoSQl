@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full list of products</title>
+  <style>
+    img {
+      width: 20%;
+      height: auto;
+    }
+    body {
+      height: 100vh;
+      width: 100%;
+      background: rgb(199,195,184);
+      background: linear-gradient(180deg, rgba(199,195,184,1) 22%, rgba(68,143,182,1) 94%);
+    }
+  </style>
+</head>
+<body>
+<tbody>
+{{ range . }}
+  <tr>
+    <td>{{ .Manufacturer }}</td>
+    <td>{{ .Model  }}</td>
+    <td>{{ .FormFactor   }}</td>
+    <td>{{.DriveBays.D35}}</td>
+    <td>{{.DriveBays.D25}}</td>
+    <td>{{ .MbFormFactor  }}</td>
+    <td>{{ .PsFormFactor }}</td>
+    <td>{{ .ExpansionSlots }}</td>
+    <td>{{ .GraphicCardSize  }}</td>
+    <td>{{ .CoolerHeight   }}</td>
+    {{ range .Size }}
+      <li>{{.}} mm</li>
+    {{ end }}
+    <td>{{ .Weight  }} kg</td>
+  </tr>
+{{ end }}
+
+
+<form action="/compCpuMb" method="post">
+  <img src="/images" alt="Image from MongoDB">
+  <p>Please select your favorite Web language:</p>
+  <input type="radio" id="mb" name="comp" value="mb">
+  <label for="mb">Motherboard</label><br>
+  <input type="radio" id="ram" name="comp" value="ram">
+  <label for="ram">RAM</label><br>
+  <input type="radio" id="cooling" name="comp" value="cooling">
+  <label for="cooling">Cooling</label><br><br>
+  <input type="submit" value="Submit">
+</tbody>
+</body>
+</html>
