@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full list of products</title>
+  <style>
+    img {
+      width: 20%;
+      height: auto;
+    }
+    body {
+      height: 100vh;
+      width: 100%;
+      background: rgb(199,195,184);
+      background: linear-gradient(180deg, rgba(199,195,184,1) 22%, rgba(68,143,182,1) 94%);
+    }
+  </style>
+</head>
+<body>
+<tbody>
+{{ range . }}
+  <tr>
+    <td>{{ .Manufacturer }}</td>
+    <td>{{ .Model  }}</td>
+    <td>{{ .Socket   }}</td>
+    <td>{{ .Chipset    }}</td>
+    <td>{{ .FormFactor    }}</td>
+    <td>{{ .Ram.Slots }}</td>
+    <td>{{ .Ram.Type }}</td>
+    <td>{{ .Ram.MaxFrequency }}</td>
+    <td>{{ .Ram.MaxCapacity }}</td>
+    <td>{{ .Interfaces.Sata3 }}</td>
+    <td>{{ .Interfaces.M2 }}</td>
+    <td>{{ .Interfaces.PciE1x }}</td>
+    <td>{{ .Interfaces.PciE16x }}</td>
+    <td>{{ .PciStandard }}</td>
+    <td>{{ .MbPower }}</td>
+    <td>{{ .CpuPower }}</td>
+  </tr>
+{{ end }}
+
+<form action="/compCpuMb" method="post">
+  <img src="/images" alt="Image from MongoDB">
+  <p>Please select your favorite Web language:</p>
+  <input type="radio" id="mb" name="comp" value="mb">
+  <label for="mb">Motherboard</label><br>
+  <input type="radio" id="ram" name="comp" value="ram">
+  <label for="ram">RAM</label><br>
+  <input type="radio" id="cooling" name="comp" value="cooling">
+  <label for="cooling">Cooling</label><br><br>
+  <input type="submit" value="Submit">
+
+</tbody>
+</body>
+</html>

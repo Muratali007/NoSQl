@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full list products</title>
+  <style>
+    body {
+      height: 100vh;
+      width: 100%;
+      background: rgb(199,195,184);
+      background: linear-gradient(180deg, rgba(199,195,184,1) 22%, rgba(68,143,182,1) 94%);
+    }
+  </style>
+</head>
+<body>
+<tbody>
+{{ range . }}
+  <tr>
+    <td>{{ .Manufacturer }}</td>
+    <td>{{ .Model  }}</td>
+    <td>{{ .Type   }}</td>
+    <td>{{ .Capacity  }}</td>
+    <td>{{ .Interface }}</td>
+    <td>{{ .MemoryType }}</td>
+    <td>{{ .Read }}</td>
+    <td>{{ .Write }}</td>
+    <td>{{ .FormFactor }}</td>
+    <td>{{ .Mftb }}</td>
+    <td>{{ .Size }}</td>
+    <td>{{ .Weight }}</td>
+  </tr>
+{{ end }}
+</tbody>
+</body>
+</html>

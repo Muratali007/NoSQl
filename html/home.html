@@ -2,15 +2,124 @@
 <html>
 <head>
   <title>Protected Page</title>
+  <style>
+    .btn {
+      width: 150px;
+      height: 50px;
+      border-radius: 10px;
+      border: none;
+      transition: all 0.5s ease-in-out;
+      font-size: 20px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      background: #040f16;
+      color: #f5f5f5;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 20px 0px #2e2e2e3a;
+    }
+
+    .btn .icon {
+      position: absolute;
+      height: 40px;
+      width: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s;
+    }
+
+    .btn .text {
+      transform: translateX(55px);
+    }
+
+    .btn:hover .icon {
+      width: 175px;
+    }
+
+    .btn:hover .text {
+      transition: all 0.5s;
+      opacity: 0;
+    }
+
+    .btn:focus {
+      outline: none;
+    }
+
+    .btn:active .icon {
+      transform: scale(0.85);
+    }
+    input {
+      outline: none;
+      cursor: pointer;
+      border: none;
+      padding: 0.9rem 2rem;
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      position: relative;
+      display: inline-block;
+      letter-spacing: 0.05rem;
+      font-weight: 700;
+      font-size: 17px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: black;
+      color: ghostwhite;
+    }
+    *{
+      font-family: "Microsoft Sans Serif";
+    }
+    body{
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      background: rgb(199,195,184);
+      background: linear-gradient(180deg, rgba(199,195,184,1) 22%, rgba(68,143,182,1) 94%);
+    }
+    main{
+      position:absolute ;
+      transform: translate(-50%,-50%);
+      left: 50%;
+      top: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    main form{
+      width: 100%;
+    }
+    form input{
+      width: 100%;
+    }
+
+
+  </style>
 </head>
 <body>
-<h1>Welcome to the protected page!</h1>
+<h1>Welcome to the Better PC!</h1>
 <p>Welcome, {{.Name}}!</p>
-<form method="post" action="/logout">
-  <input type="submit" value="Logout">
-</form>
+<main>
   <form method="post" action="/shop">
-    <button type="submit" value="Shop">Shop</button>
-    </form>
+    <button type="submit" value="Shop" class="btn"><span class="icon">
+        <svg viewBox="0 0 175 80" width="40" height="40">
+            <rect width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+            <rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+            <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+        </svg>
+    </span>
+      <span class="text">shop</span></button>
+  </form>
+
+
+  <form method="post" action="/logout">
+    <input type="submit" value="Logout">
+  </form>
+
+</main>
 </body>
 </html>
