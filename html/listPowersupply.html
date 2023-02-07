@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of products</title>
+</head>
+<body>
+<tbody>
+{{ range . }}
+    <tr>
+        <td>{{ .Manufacturer }}</td>
+        <td>{{ .Model  }}</td>
+        <td>{{ .FormFactor   }}</td>
+        <td>{{ .OutputPower  }}</td>
+        <td>{{ .Connectors.Sata }}</td>
+        <td>{{ .Connectors.Molex }}</td>
+        <td>{{ .Connectors.PciE }}</td>
+        <td>{{ .Modules }}</td>
+        <td>{{ .MbPower }}</td>
+        <td>{{ .CpuPower }}</td>
+    </tr>
+{{ end }}
+</tbody>
+</body>
+</html>

@@ -1,36 +1,48 @@
 package data
 
+import (
+	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
+)
+
 type Cpu struct {
-	ID              string    `bson:"_id"`
-	Manufacturer    string    `bson:"manufacturer"`
-	Model           string    `bson:"model"`
-	Cores           int       `bson:"cores"`
-	Threads         int       `bson:"threads"`
-	ClockFrequency  []float64 `bson:"clock_frequency"`
-	Socket          string    `bson:"socket"`
-	RamChannels     int       `bson:"ram_channels"`
-	RamTypes        []string  `bson:"ram_types"`
-	MaxRamFrequency []int     `bson:"max_ram_frequency"`
-	MaxRamCapacity  int       `bson:"max_ram_capacity"`
-	Tdp             int       `bson:"tdp"`
-	PciE            int       `bson:"pci-e"`
+	ID             string    `bson:"_id" json:"id,omitempty"`
+	Manufacturer   string    `bson:"manufacturer" json:"manufacturer,omitempty"`
+	Model          string    `bson:"model" json:"model,omitempty"`
+	Cores          int       `bson:"cores" json:"cores,omitempty"`
+	Threads        int       `bson:"threads" json:"threads,omitempty"`
+	ClockFrequency []float64 `bson:"clock_frequency" json:"clock_frequency,omitempty"`
+	Socket         string    `bson:"socket" json:"socket,omitempty"`
+	Ram            ramCpu    `bson:"ram"`
+	Tdp            int       `bson:"tdp" json:"tdp,omitempty"`
+	PciE           int       `bson:"pci-e" json:"pci_e,omitempty"`
+}
+
+type ramCpu struct {
+	Channels     int      `bson:"channels"`
+	Types        []string `bson:"types"`
+	MaxFrequency []int    `bson:"max_frequency"`
+	MaxCapacity  int      `bson:"max_capacity"`
 }
 
 type Motherboard struct {
-	ID              string     `bson:"_id"`
-	Manufacturer    string     `bson:"manufacturer"`
-	Model           string     `bson:"model"`
-	Socket          string     `bson:"socket"`
-	Chipset         string     `bson:"chipset"`
-	FormFactor      string     `bson:"form_factor"`
-	RamSlots        int        `bson:"ram_slots"`
-	RamTypes        string     `bson:"ram_types"`
-	MaxRamFrequency int        `bson:"max_ram_frequency"`
-	MaxRam          int        `bson:"max_ram"`
-	Interfaces      interfaces `bson:"interfaces"`
-	PciStandard     int        `bson:"pci_standard"`
-	MbPower         int        `bson:"mb_power"`
-	CpuPower        int        `bson:"cpu_power"`
+	ID           string     `bson:"_id"`
+	Manufacturer string     `bson:"manufacturer"`
+	Model        string     `bson:"model"`
+	Socket       string     `bson:"socket"`
+	Chipset      string     `bson:"chipset"`
+	FormFactor   string     `bson:"form_factor"`
+	Ram          ramMb      `bson:"ram"`
+	Interfaces   interfaces `bson:"interfaces"`
+	PciStandard  int        `bson:"pci_standard"`
+	MbPower      int        `bson:"mb_power"`
+	CpuPower     int        `bson:"cpu_power"`
+}
+
+type ramMb struct {
+	Slots        int    `bson:"slots"`
+	Type         string `bson:"type"`
+	MaxFrequency int    `bson:"max_frequency"`
+	MaxCapacity  int    `bson:"max_capacity"`
 }
 
 type interfaces struct {
@@ -48,7 +60,8 @@ type Ram struct {
 	Number       int     `bson:"number"`
 	FormFactor   string  `bson:"form_factor"`
 	Rank         int     `bson:"rank"`
-	RamType      string  `bson:"ram_type"`
+	Type         string  `bson:"type"`
+	Frequency    int     `bson:"frequency"`
 	Bandwidth    int     `bson:"bandwidth"`
 	CasLatency   string  `bson:"cas_latency"`
 	TimingScheme []int   `bson:"timing_scheme"`
@@ -63,7 +76,7 @@ type Ssd struct {
 	Model        string  `bson:"model"`
 	Type         string  `bson:"type"`
 	Capacity     int     `bson:"capacity"`
-	Interface    int     `bson:"interface"`
+	Interface    string  `bson:"interface"`
 	MemoryType   string  `bson:"memory_type"`
 	Read         int     `bson:"read"`
 	Write        int     `bson:"write"`
@@ -89,7 +102,40 @@ type Hdd struct {
 	Weight       int    `bson:"weight"`
 }
 
-type GraphicCard struct {
+type Gpu struct {
+	ID            string          `bson:"_id"`
+	Manufacturer  string          `bson:"manufacturer"`
+	Model         string          `bson:"model"`
+	Architecture  string          `bson:"architecture"`
+	Memory        memoryGpu       `bson:"memory"`
+	GpuFrequency  int             `bson:"gpu_frequency"`
+	ProcessSize   int             `bson:"process_size"`
+	MaxResolution string          `bson:"max_resolution"`
+	Interfaces    []interfacesGpu `bson:"interfaces"`
+	MaxMonitors   int             `bson:"max_monitors"`
+	Cooling       coolingGpu      `bson:"cooling"`
+	Tdp           int             `bson:"tdp"`
+	TdpR          int             `bson:"tdp_r"`
+	PowerSupply   []int           `bson:"power_supply"`
+	Slots         float64         `bson:"slots"`
+	Size          []int           `bson:"size"`
+}
+
+type memoryGpu struct {
+	Capacity       int    `bson:"capacity"`
+	Type           string `bson:"type"`
+	InterfaceWidth int    `bson:"interface_width"`
+	Frequency      int    `bson:"frequency"`
+}
+
+type interfacesGpu struct {
+	Type   string `bson:"type"`
+	Number int    `bson:"number"`
+}
+
+type coolingGpu struct {
+	Type      string `bson:"type"`
+	FanNumber int    `bson:"fan_number"`
 }
 
 type Cooling struct {
@@ -104,7 +150,7 @@ type Cooling struct {
 	NoiseLevel   int      `bson:"noise_level"`
 	MountType    string   `bson:"mount_type"`
 	Power        int      `bson:"power"`
-	Height       float32  `bson:"height"`
+	Height       int      `bson:"height"`
 }
 
 type Housing struct {
@@ -123,30 +169,24 @@ type Housing struct {
 }
 
 type driveBays struct {
-	D25 int `bson:"25"`
-	D35 int `bson:"35"`
+	D35 int `bson:"3_5"`
+	D25 int `bson:"2_5"`
 }
 
 type PowerSupply struct {
-	ID           string     `bson:"_id"`
-	Manufacturer string     `bson:"manufacturer"`
-	Model        string     `bson:"model"`
-	FormFactor   string     `bson:"form_factor"`
-	OutputPower  int        `bson:"output_power"`
-	Connectors   connectors `bson:"connectors"`
+	ID           string         `bson:"_id"`
+	Manufacturer string         `bson:"manufacturer"`
+	Model        string         `bson:"model"`
+	FormFactor   string         `bson:"form_factor"`
+	OutputPower  int            `bson:"output_power"`
+	Connectors   connectors     `bson:"connectors"`
+	Modules      bool           `bson:"modules"`
+	MbPower      int            `bson:"mb_power"`
+	CpuPower     bsoncore.Array `bson:"cpu_power"`
 }
 
-type connectors []sata
-
-type sata struct {
-	Sata int `bson:"SATA"`
-}
-
-type molex struct {
-	Molex int `bson:"MOLEX"`
-}
-
-type pciE struct {
-	PciE   string `bson:"PCI_E"`
-	Number int    `bson:"number"`
+type connectors struct {
+	Sata  int   `bson:"SATA"`
+	Molex int   `bson:"MOLEX"`
+	PciE  []int `bson:"PCI_E"`
 }
