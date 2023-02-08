@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"html/template"
 	"net/http"
 )
@@ -15,6 +16,55 @@ func Shop(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data.GetUser(w))
 }
 
+/*
+func listCpu() (itmArr interface{}, itm interface{}) {
+	var itemsCpu []data.Cpu
+	var itemCpu data.Cpu
+	return itemsCpu, itemCpu
+}
+*/
+
+func Ll(w http.ResponseWriter, r *http.Request) {
+	logger := logging.GetLogger()
+	tmpl := template.Must(template.ParseFiles("html/ll.html"))
+	tmpl.Execute(w, data.GetUser(w))
+
+	data.Init("shop", "ssd")
+	var items []data.Ssd
+
+	if r.Method == http.MethodPost {
+
+		ObjID, err := primitive.ObjectIDFromHex(r.FormValue("ssdbtn"))
+		filter := bson.M{"_id": ObjID}
+
+		cur, err := data.Collection.Find(context.TODO(), filter)
+		if err != nil {
+			logger.Infof("error:", err)
+		}
+		defer cur.Close(context.TODO())
+
+		for cur.Next(context.TODO()) {
+			var item data.Ssd
+
+			err := cur.Decode(&item)
+			if err != nil {
+				logger.Infof("error :", err)
+			}
+			items = append(items, item)
+		}
+		if err := cur.Err(); err != nil {
+			logger.Infof("error :", err)
+		}
+		fmt.Println("Found multiple items:", items)
+
+		err = tmpl.Execute(w, items)
+		if err != nil {
+			logger.Infof("error :", err)
+		}
+		data.Init("test", "users")
+	}
+
+}
 func List(w http.ResponseWriter, r *http.Request) {
 
 	logger := logging.GetLogger()

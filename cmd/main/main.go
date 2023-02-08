@@ -16,6 +16,7 @@ func main() {
 	http.HandleFunc("/logout", Handlers.Logout)
 	http.HandleFunc("/home", Handlers.AuthMiddleware(Handlers.Home))
 	http.HandleFunc("/shop", Handlers.AuthMiddleware(Handlers.Shop))
+	http.HandleFunc("/ll", Handlers.AuthMiddleware(Handlers.Ll))
 	http.HandleFunc("/listCpu", Handlers.AuthMiddleware(Handlers.List))
 	http.HandleFunc("/listCooling", Handlers.AuthMiddleware(Handlers.List))
 	http.HandleFunc("/listHdd", Handlers.AuthMiddleware(Handlers.List))

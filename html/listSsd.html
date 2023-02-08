@@ -20,6 +20,10 @@
         <td>{{ .Mftb }}</td>
         <td>{{ .Size }}</td>
         <td>{{ .Weight }}</td>
+        <form method="post" action="/ll" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Shop</button>
+        </form>
+        <br></br>
     </tr>
 {{ end }}
 </tbody>
