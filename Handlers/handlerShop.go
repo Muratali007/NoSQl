@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"html/template"
 	"net/http"
 )
@@ -15,9 +16,57 @@ func Shop(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data.GetUser(w))
 }
 
-func List(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("html/list.html"))
+/*
+func listCpu() (itmArr interface{}, itm interface{}) {
+	var itemsCpu []data.Cpu
+	var itemCpu data.Cpu
+	return itemsCpu, itemCpu
+}
+*/
+
+func Ll(w http.ResponseWriter, r *http.Request) {
+	logger := logging.GetLogger()
+	tmpl := template.Must(template.ParseFiles("html/ll.html"))
 	tmpl.Execute(w, data.GetUser(w))
+
+	data.Init("shop", "ssd")
+	var items []data.Ssd
+
+	if r.Method == http.MethodPost {
+
+		ObjID, err := primitive.ObjectIDFromHex(r.FormValue("ssdbtn"))
+		filter := bson.M{"_id": ObjID}
+
+		cur, err := data.Collection.Find(context.TODO(), filter)
+		if err != nil {
+			logger.Infof("error:", err)
+		}
+		defer cur.Close(context.TODO())
+
+		for cur.Next(context.TODO()) {
+			var item data.Ssd
+
+			err := cur.Decode(&item)
+			if err != nil {
+				logger.Infof("error :", err)
+			}
+			items = append(items, item)
+		}
+		if err := cur.Err(); err != nil {
+			logger.Infof("error :", err)
+		}
+		fmt.Println("Found multiple items:", items)
+
+		err = tmpl.Execute(w, items)
+		if err != nil {
+			logger.Infof("error :", err)
+		}
+		data.Init("test", "users")
+	}
+
+}
+func List(w http.ResponseWriter, r *http.Request) {
+
 	logger := logging.GetLogger()
 
 	if r.Method == http.MethodPost {
@@ -25,6 +74,8 @@ func List(w http.ResponseWriter, r *http.Request) {
 
 		switch value {
 		case "cpu":
+			tmpl := template.Must(template.ParseFiles("html/listCpu.html"))
+			tmpl.Execute(w, data.GetUser(w))
 			data.Init("shop", "cpu")
 			var items []data.Cpu
 
@@ -56,7 +107,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 			}
 			data.Init("test", "users")
 		case "cooling":
-			tmpl := template.Must(template.ParseFiles("html/list2.html"))
+			tmpl := template.Must(template.ParseFiles("html/listCooling.html"))
 			tmpl.Execute(w, data.GetUser(w))
 			data.Init("shop", "cooling")
 			var items []data.Cooling
@@ -89,7 +140,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 			}
 			data.Init("test", "users")
 		case "hdd":
-			tmpl := template.Must(template.ParseFiles("html/list3.html"))
+			tmpl := template.Must(template.ParseFiles("html/listHdd.html"))
 			tmpl.Execute(w, data.GetUser(w))
 			data.Init("shop", "hdd")
 			var items []data.Hdd
@@ -123,7 +174,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 			data.Init("test", "users")
 
 		case "housing":
-			tmpl := template.Must(template.ParseFiles("html/list4.html"))
+			tmpl := template.Must(template.ParseFiles("html/listHousing.html"))
 			tmpl.Execute(w, data.GetUser(w))
 			data.Init("shop", "housing")
 			var items []data.Housing
@@ -156,7 +207,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 			}
 			data.Init("test", "users")
 		case "ram":
-			tmpl := template.Must(template.ParseFiles("html/list5.html"))
+			tmpl := template.Must(template.ParseFiles("html/listRam.html"))
 			tmpl.Execute(w, data.GetUser(w))
 			data.Init("shop", "ram")
 			var items []data.Ram
@@ -190,7 +241,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 			data.Init("test", "users")
 
 		case "motherboard":
-			tmpl := template.Must(template.ParseFiles("html/list6.html"))
+			tmpl := template.Must(template.ParseFiles("html/listMotherboard.html"))
 			tmpl.Execute(w, data.GetUser(w))
 			data.Init("shop", "motherboard")
 			var items []data.Motherboard
@@ -205,6 +256,108 @@ func List(w http.ResponseWriter, r *http.Request) {
 
 			for cur.Next(context.TODO()) {
 				var item data.Motherboard
+
+				err := cur.Decode(&item)
+				if err != nil {
+					logger.Infof("error :", err)
+				}
+				items = append(items, item)
+			}
+			if err := cur.Err(); err != nil {
+				logger.Infof("error :", err)
+			}
+			fmt.Println("Found multiple items:", items)
+
+			err = tmpl.Execute(w, items)
+			if err != nil {
+				logger.Infof("error :", err)
+			}
+			data.Init("test", "users")
+
+		case "ssd":
+			tmpl := template.Must(template.ParseFiles("html/listSsd.html"))
+			tmpl.Execute(w, data.GetUser(w))
+			data.Init("shop", "ssd")
+			var items []data.Ssd
+
+			filter := bson.M{}
+
+			cur, err := data.Collection.Find(context.TODO(), filter)
+			if err != nil {
+				logger.Infof("error:", err)
+			}
+			defer cur.Close(context.TODO())
+
+			for cur.Next(context.TODO()) {
+				var item data.Ssd
+
+				err := cur.Decode(&item)
+				if err != nil {
+					logger.Infof("error :", err)
+				}
+				items = append(items, item)
+			}
+			if err := cur.Err(); err != nil {
+				logger.Infof("error :", err)
+			}
+			fmt.Println("Found multiple items:", items)
+
+			err = tmpl.Execute(w, items)
+			if err != nil {
+				logger.Infof("error :", err)
+			}
+			data.Init("test", "users")
+
+		case "powersupply":
+			tmpl := template.Must(template.ParseFiles("html/listPowersupply.html"))
+			tmpl.Execute(w, data.GetUser(w))
+			data.Init("shop", "powersupply")
+			var items []data.PowerSupply
+
+			filter := bson.M{}
+
+			cur, err := data.Collection.Find(context.TODO(), filter)
+			if err != nil {
+				logger.Infof("error:", err)
+			}
+			defer cur.Close(context.TODO())
+
+			for cur.Next(context.TODO()) {
+				var item data.PowerSupply
+
+				err := cur.Decode(&item)
+				if err != nil {
+					logger.Infof("error :", err)
+				}
+				items = append(items, item)
+			}
+			if err := cur.Err(); err != nil {
+				logger.Infof("error :", err)
+			}
+			fmt.Println("Found multiple items:", items)
+
+			err = tmpl.Execute(w, items)
+			if err != nil {
+				logger.Infof("error :", err)
+			}
+			data.Init("test", "users")
+
+		case "gpu":
+			tmpl := template.Must(template.ParseFiles("html/listGpu.html"))
+			tmpl.Execute(w, data.GetUser(w))
+			data.Init("shop", "gpu")
+			var items []data.Gpu
+
+			filter := bson.M{}
+
+			cur, err := data.Collection.Find(context.TODO(), filter)
+			if err != nil {
+				logger.Infof("error:", err)
+			}
+			defer cur.Close(context.TODO())
+
+			for cur.Next(context.TODO()) {
+				var item data.Gpu
 
 				err := cur.Decode(&item)
 				if err != nil {

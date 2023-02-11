@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of products</title>
+</head>
+<body>
+<tbody>
+{{ range . }}
+    <tr>
+        <td>{{ .Manufacturer }}</td>
+        <td>{{ .Model  }}</td>
+        <td>{{ .Capacity   }}</td>
+        <td>{{ .Number  }}</td>
+        <td>{{ .FormFactor }}</td>
+        <td>{{ .Rank }}</td>
+        <td>{{ .Type }}</td>
+        <td>{{ .Frequency }}</td>
+        <td>{{ .Bandwidth }}</td>
+        <td>{{ .CasLatency }}</td>
+        <td>
+            {{range .TimingScheme}}
+                <li>{{.}} ns</li>
+            {{end}}
+        </td>
+        <td>{{ .Voltage }} V</td>
+        <td>{{ .Cooling }}</td>
+        <td>{{ .Height }} mm</td>
+    </tr>
+{{ end }}
+</tbody>
+</body>
+</html>

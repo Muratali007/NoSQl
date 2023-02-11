@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of products</title>
+</head>
+<body>
+<tbody>
+{{ range . }}
+    <tr>
+        <td>{{ .Manufacturer }}</td>
+        <td>{{ .Model  }}</td>
+        <td>{{ .Cores   }}</td>
+        <td>{{ .Threads    }}</td>
+        <td>
+                {{range .ClockFrequency}}
+                    <li>{{.}} GHz</li>
+                {{end}}
+            </td>
+        <td>{{ .Socket    }}</td>
+        <td>{{ .Ram.Channels    }}</td>
+        <td>{{ .Ram.Types  }}</td>
+        <td>{{ .Ram.MaxFrequency }}</td>
+        <td>{{ .Ram.MaxCapacity }}</td>
+        <td>{{ .Tdp   }}</td>
+        <td>{{ .PciE  }}</td>
+    </tr>
+{{ end }}
+</tbody>
+</body>
+</html>
