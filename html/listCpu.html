@@ -24,12 +24,18 @@
         <td>{{ .Model  }}</td>
         <td>{{ .Cores   }}</td>
         <form method="post" action="/fullListCpu" method="post">
-            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.Image }}">Full</button>
-            <img src="/imageCpu" alt="Image from MongoDB">
+            <button name="ssdbtn" type="submit" value="{{.ID}}">Full</button>
+        </form>
+        <form method="post" action="/modifyCpuForm" method="post">
+            <button name="modify" type="submit" value="{{.ID}}">Modify</button>
         </form>
         <br></br>
     </tr>
 {{ end }}
+
+<form action="/addCpuForm" method="post">
+    <button name="cpuForm" type="submit">Add CPU</button>
+</form>
 </tbody>
 </body>
 </html>

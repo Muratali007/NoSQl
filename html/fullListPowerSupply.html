@@ -31,18 +31,17 @@
     <td>{{ .MbPower }}</td>
     <td>{{ .CpuPower }}</td>
   </tr>
-{{ end }}
+  <form action="/comparisonPowerMb" method="post">
+    <button type="submit" name="mb" value="{{.MbPower}}">Motherboard</button>
+  </form>
+  <form action="/comparisonPowerGpu" method="post">
+    <button type="submit" name="gpu" value="{{.OutputPower}}">GPU</button>
+  </form>
+  <form action="/comparisonPowerHousing" method="post">
+    <button type="submit" name="housing" value="{{.FormFactor}}">Housing</button>
+  </form>
 
-<form action="/compCpuMb" method="post">
-  <img src="/images" alt="Image from MongoDB">
-  <p>Please select your favorite Web language:</p>
-  <input type="radio" id="mb" name="comp" value="mb">
-  <label for="mb">Motherboard</label><br>
-  <input type="radio" id="ram" name="comp" value="ram">
-  <label for="ram">RAM</label><br>
-  <input type="radio" id="cooling" name="comp" value="cooling">
-  <label for="cooling">Cooling</label><br><br>
-  <input type="submit" value="Submit">
+{{ end }}
 </tbody>
 </body>
 </html>

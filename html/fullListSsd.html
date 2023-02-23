@@ -29,6 +29,11 @@
     <td>{{ .Size }}</td>
     <td>{{ .Weight }}</td>
   </tr>
+
+
+  <form action="/comparisonSsdMb" method="post">
+    <button type="submit" name="mb" value="{{.FormFactor}}">Motherboard</button>
+  </form>
 {{ end }}
 </tbody>
 </body>

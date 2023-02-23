@@ -51,18 +51,15 @@
       {{end}}
     </td>
   </tr>
-{{ end }}
 
-<form action="/compCpuMb" method="post">
-  <img src="/images" alt="Image from MongoDB">
-  <p>Please select your favorite Web language:</p>
-  <input type="radio" id="mb" name="comp" value="mb">
-  <label for="mb">Motherboard</label><br>
-  <input type="radio" id="ram" name="comp" value="ram">
-  <label for="ram">RAM</label><br>
-  <input type="radio" id="cooling" name="comp" value="cooling">
-  <label for="cooling">Cooling</label><br><br>
-  <input type="submit" value="Submit">
+  <form action="/comparisonGpuPower" method="post">
+    <button type="submit" name="power" value="{{.TdpR}}">Power supply</button>
+  </form>
+  <form action="/comparisonMbHousing" method="post">
+    <button type="submit" name="housing" value="{{index .Size 0}}">Housing</button>
+  </form>
+
+{{ end }}
 </tbody>
 </body>
 </html>

@@ -37,18 +37,23 @@
     <td>{{ .MbPower }}</td>
     <td>{{ .CpuPower }}</td>
   </tr>
-{{ end }}
 
-<form action="/compCpuMb" method="post">
-  <img src="/images" alt="Image from MongoDB">
-  <p>Please select your favorite Web language:</p>
-  <input type="radio" id="mb" name="comp" value="mb">
-  <label for="mb">Motherboard</label><br>
-  <input type="radio" id="ram" name="comp" value="ram">
-  <label for="ram">RAM</label><br>
-  <input type="radio" id="cooling" name="comp" value="cooling">
-  <label for="cooling">Cooling</label><br><br>
-  <input type="submit" value="Submit">
+  <form action="/comparisonMbCpu" method="post">
+    <button type="submit" name="cpu" value="{{.Socket}}">CPU</button>
+  </form>
+  <form action="/comparisonMbRam" method="post">
+    <button type="submit" name="ram" value="{{.Ram.Type}}">RAM</button>
+  </form>
+  <form action="/comparisonMbHousing" method="post">
+    <button type="submit" name="housing" value="{{.FormFactor}}">Housing</button>
+  </form>
+  <form action="/comparisonMbHdd" method="post">
+    <button type="submit" name="hdd" value="{{.Interfaces.Sata3}}">HDD</button>
+  </form>
+  <form action="/comparisonMbSsd" method="post">
+    <button type="submit" name="ssd" value="{{.PciStandard}}">SSD</button>
+  </form>
+{{ end }}
 
 </tbody>
 </body>

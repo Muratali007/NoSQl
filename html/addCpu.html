@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Full list of products</title>
+    <style>
+        body {
+            height: 100vh;
+            width: 100%;
+            background: rgb(199,195,184);
+            background: linear-gradient(180deg, rgba(199,195,184,1) 22%, rgba(68,143,182,1) 94%);
+        }
+    </style>
+</head>
+<body>
+<tbody>
+
+<form action="/addCpuDo" method="post">
+    <p>Manufacturer</p>
+    <input type="text" name="man" required>
+    <p>Model</p>
+    <input type="text" name="model" required>
+    <p>Cores</p>
+    <input type="text" name="cores" required>
+    <p>Threads</p>
+    <input type="text" name="threads" required>
+    <p>Clock Frequency</p>
+    <div>
+        <p>Base</p>
+        <input type="text" name="base" required>
+        <span>GHz</span>
+        <p>Turbo-boost</p>
+        <input type="text" name="turbo" required>
+        <span>GHz</span>
+    </div>
+    <p>Socket</p>
+    <input type="text" name="socket" required>
+    <p>Ram</p>
+    <div>
+        <p>Type</p>
+        <input type="text" name="type" required>
+        <p>Max Frequency</p>
+        <input type="text" name="maxFr" required>
+        <span>MHz</span>
+        <p>Max Capacity</p>
+        <input type="text" name="maxCap" required>
+        <span>GB</span>
+    </div>
+    <p>TDP</p>
+    <input type="text" name="tdp" required>
+    <span>W</span>
+    <p>PciE</p>
+    <input type="text" name="pcie" required>
+    <p>Max Temperature</p>
+    <input type="text" name="maxTemp" required>
+    <span>°C</span>
+
+
+
+    <button type="submit" name="addCpu">Add CPU</button>
+</form>
+
+
+
+</tbody>
+</body>
+</html>
