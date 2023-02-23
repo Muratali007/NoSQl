@@ -11,21 +11,10 @@
         <td>{{ .Manufacturer }}</td>
         <td>{{ .Model  }}</td>
         <td>{{ .Capacity   }}</td>
-        <td>{{ .Number  }}</td>
-        <td>{{ .FormFactor }}</td>
-        <td>{{ .Rank }}</td>
-        <td>{{ .Type }}</td>
-        <td>{{ .Frequency }}</td>
-        <td>{{ .Bandwidth }}</td>
-        <td>{{ .CasLatency }}</td>
-        <td>
-            {{range .TimingScheme}}
-                <li>{{.}} ns</li>
-            {{end}}
-        </td>
-        <td>{{ .Voltage }} V</td>
-        <td>{{ .Cooling }}</td>
-        <td>{{ .Height }} mm</td>
+        <form method="post" action="/fullListRam" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Full</button>
+        </form>
+        <br></br>
     </tr>
 {{ end }}
 </tbody>

@@ -11,13 +11,10 @@
         <td>{{ .Manufacturer }}</td>
         <td>{{ .Model  }}</td>
         <td>{{ .FormFactor   }}</td>
-        <td>{{ .OutputPower  }}</td>
-        <td>{{ .Connectors.Sata }}</td>
-        <td>{{ .Connectors.Molex }}</td>
-        <td>{{ .Connectors.PciE }}</td>
-        <td>{{ .Modules }}</td>
-        <td>{{ .MbPower }}</td>
-        <td>{{ .CpuPower }}</td>
+        <form method="post" action="/fullListPowerSupply" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Full</button>
+        </form>
+        <br></br>
     </tr>
 {{ end }}
 </tbody>

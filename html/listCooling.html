@@ -11,26 +11,10 @@
         <td>{{ .Manufacturer }}</td>
         <td>{{ .Model  }}</td>
         <td>{{ .Type   }}</td>
-        <td>
-            {{range .Sockets}}
-                <li>{{.}} </li>
-            {{end}}
-        </td>
-        <td>
-            {{range .Fans}}
-                <li>{{.}} fans</li>
-            {{end}}
-        </td>
-        <td>
-            {{range .Rpm}}
-                <li>{{.}} rpm</li>
-            {{end}}
-        </td>
-        <td>{{ .Tdp  }}</td>
-        <td>{{ .NoiseLevel }}</td>
-        <td>{{ .MountType }}</td>
-        <td>{{ .Power  }}</td>
-        <td>{{ .Height   }}</td>
+        <form method="post" action="/fullListCooling" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Full</button>
+        </form>
+        <br></br>
     </tr>
 {{ end }}
 </tbody>

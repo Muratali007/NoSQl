@@ -11,17 +11,8 @@
         <td>{{ .Manufacturer }}</td>
         <td>{{ .Model  }}</td>
         <td>{{ .Type   }}</td>
-        <td>{{ .Capacity  }}</td>
-        <td>{{ .Interface }}</td>
-        <td>{{ .MemoryType }}</td>
-        <td>{{ .Read }}</td>
-        <td>{{ .Write }}</td>
-        <td>{{ .FormFactor }}</td>
-        <td>{{ .Mftb }}</td>
-        <td>{{ .Size }}</td>
-        <td>{{ .Weight }}</td>
-        <form method="post" action="/ll" method="post">
-            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Shop</button>
+        <form method="post" action="/fullListSsd" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Full</button>
         </form>
         <br></br>
     </tr>
