@@ -69,5 +69,9 @@ func main() {
 	http.HandleFunc("/modifyCpuForm", Handlers.AuthMiddleware(Handlers.ModifyCpuForm))
 	http.HandleFunc("/modifyCpu", Handlers.AuthMiddleware(Handlers.ModifyCpu))
 	http.HandleFunc("/deleteCpu", Handlers.AuthMiddleware(Handlers.DeleteCpu))
+
+	handler := http.StripPrefix("/assets/", http.FileServer(http.Dir("html/assets")))
+	http.Handle("/assets/", handler)
+
 	http.ListenAndServe(":8080", nil)
 }
