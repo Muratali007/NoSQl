@@ -8,24 +8,23 @@
 <tbody>
 {{ range . }}
     <tr>
+        {{.ID}}
         <td>{{ .Manufacturer }}</td>
         <td>{{ .Model  }}</td>
         <td>{{ .Cores   }}</td>
-        <td>{{ .Threads    }}</td>
-        <td>
-                {{range .ClockFrequency}}
-                    <li>{{.}} GHz</li>
-                {{end}}
-            </td>
-        <td>{{ .Socket    }}</td>
-        <td>{{ .Ram.Channels    }}</td>
-        <td>{{ .Ram.Types  }}</td>
-        <td>{{ .Ram.MaxFrequency }}</td>
-        <td>{{ .Ram.MaxCapacity }}</td>
-        <td>{{ .Tdp   }}</td>
-        <td>{{ .PciE  }}</td>
+        <form method="post" action="/fullListCpu" method="post">
+            <button name="ssdbtn" type="submit" value="{{.ID}}">Full</button>
+        </form>
+        <form method="post" action="/modifyCpuForm" method="post">
+            <button name="modify" type="submit" value="{{.ID}}">Modify</button>
+        </form>
+        <br></br>
     </tr>
 {{ end }}
+
+<form action="/addCpuForm" method="post">
+    <button name="cpuForm" type="submit">Add CPU</button>
+</form>
 </tbody>
 </body>
 </html>

@@ -11,17 +11,10 @@
         <td>{{ .Manufacturer }}</td>
         <td>{{ .Model  }}</td>
         <td>{{ .FormFactor   }}</td>
-        <td>{{.DriveBays.D35}}</td>
-        <td>{{.DriveBays.D25}}</td>
-        <td>{{ .MbFormFactor  }}</td>
-        <td>{{ .PsFormFactor }}</td>
-        <td>{{ .ExpansionSlots }}</td>
-        <td>{{ .GraphicCardSize  }}</td>
-        <td>{{ .CoolerHeight   }}</td>
-        {{ range .Size }}
-            <li>{{.}} mm</li>
-        {{ end }}
-        <td>{{ .Weight  }} kg</td>
+        <form method="post" action="/fullListHousing" method="post">
+            <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Full</button>
+        </form>
+        <br></br>
     </tr>
 {{ end }}
 </tbody>

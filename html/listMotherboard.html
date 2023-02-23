@@ -11,19 +11,10 @@
     <td>{{ .Manufacturer }}</td>
     <td>{{ .Model  }}</td>
     <td>{{ .Socket   }}</td>
-    <td>{{ .Chipset    }}</td>
-    <td>{{ .FormFactor    }}</td>
-    <td>{{ .Ram.Slots }}</td>
-    <td>{{ .Ram.Type }}</td>
-    <td>{{ .Ram.MaxFrequency }}</td>
-    <td>{{ .Ram.MaxCapacity }}</td>
-    <td>{{ .Interfaces.Sata3 }}</td>
-    <td>{{ .Interfaces.M2 }}</td>
-    <td>{{ .Interfaces.PciE1x }}</td>
-    <td>{{ .Interfaces.PciE16x }}</td>
-    <td>{{ .PciStandard }}</td>
-    <td>{{ .MbPower }}</td>
-    <td>{{ .CpuPower }}</td>
+    <form method="post" action="/fullListMotherboard" method="post">
+      <button name="ssdbtn" type="submit" id="{{.ID}}" value="{{.ID}}">Full</button>
+    </form>
+    <br></br>
   </tr>
 {{ end }}
 </tbody>
